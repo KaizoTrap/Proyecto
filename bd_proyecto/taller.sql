@@ -56,4 +56,14 @@ SELECT Pedidos.ID_pedidos, Pedidos.Fecha_pedido, Pedidos.Estado_pedido FROM Pedi
 JOIN clientes ON Pedidos.ID_cliente = clientes.ID_cliente
 WHERE clientes.Nombre_cliente = 'Santiago';
 
+SELECT 
+    productos.Nombre_producto AS Nombre_producto,
+    Detalles_pedido.Cantidad,
+    Detalles_pedido.Precio_unitario,
+    (Detalles_pedido.cantidad * Detalles_pedido.Precio_unitario) AS Subtotal
+FROM Detalles_pedido
+JOIN Pedidos ON Detalles_pedido.ID_detalle = Pedidos.ID_pedidos
+JOIN clientes ON Pedidos.ID_cliente = clientes.ID_cliente
+JOIN productos ON Detalles_pedido.ID_producto = productos.ID_producto
+WHERE clientes.Nombre_cliente = 'Santiago';
 

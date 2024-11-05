@@ -1,48 +1,66 @@
-create database tienda_usb;
+CREATE DATABASE tienda_usb;
+USE tienda_usb;
 
-use tienda_usb;
-
+-- Tabla usuario
 CREATE TABLE usuario (
-	id_usuario INT auto_increment primary key,
-    usuario varchar(10) not null,
-    contrasena varchar(45) not null
-);    
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    usuario VARCHAR(10) NOT NULL,
+    contrasena VARCHAR(45) NOT NULL
+);
 
+-- Tabla datos_usuario
 CREATE TABLE datos_usuario (
-	id_dato INT auto_increment primary key,
-    nombre_usuario varchar(45) not null,
-    apellido_usuario varchar(45) not null,
-    correo_usuario varchar(45) not null,
-	numero_identificacion int(15) not null
-);    
+    id_dato INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_usuario VARCHAR(45) NOT NULL,
+    apellido_usuario VARCHAR(45) NOT NULL,
+    correo_usuario VARCHAR(45) NOT NULL,
+    numero_identificacion BIGINT NOT NULL,
+    id_usuario INT,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+);
 
+-- Tabla producto
 CREATE TABLE producto (
-	id_producto INT auto_increment primary key,
-    nombre_producto varchar(45) not null,
-    precio_producto int(10) not null,
-    imagen varchar(45) NULL
-);    
+    id_producto INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_producto VARCHAR(45) NOT NULL,
+    precio_producto DECIMAL(10, 2) NOT NULL,
+    imagen VARCHAR(45)
+);
 
-CREATE TABLE decripcion_producto (
-	id_descripcion_producto INT auto_increment primary key,
-    detalle_producto varchar(300) not null,
-    talla varchar(2) null,
-    stock_prenda int NULL,
-    tipo_prenda varchar(45) not null
-);    
+-- Tabla descripcion_producto
+CREATE TABLE descripcion_producto (
+    id_descripcion_producto INT AUTO_INCREMENT PRIMARY KEY,
+    detalle_producto VARCHAR(300) NOT NULL,
+    talla VARCHAR(2),
+    stock_prenda INT,
+    tipo_prenda VARCHAR(45) NOT NULL,
+    id_producto INT,
+    FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
+);
 
+-- Tabla pedido
 CREATE TABLE pedido (
-	id_pedido INT auto_increment primary key,
-    fecha_pedido datetime not null
-);    
+    id_pedido INT AUTO_INCREMENT PRIMARY KEY,
+    fecha_pedido DATETIME NOT NULL,
+    id_usuario INT,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+);
 
+-- Tabla detalle_pedido
 CREATE TABLE detalle_pedido (
-	id_detalle_pedido INT auto_increment primary key,
-    cantidad int not null,
-    total int(10) not null
-);    
+    id_detalle_pedido INT AUTO_INCREMENT PRIMARY KEY,
+    id_pedido INT,
+    id_producto INT,
+    cantidad INT NOT NULL,
+    total DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido),
+    FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
+);
 
+-- Tabla facturas_generadas
 CREATE TABLE facturas_generadas (
-	id_facturas INT auto_increment primary key,
-    factuas_generadas varchar(45) NULL
-);    
+    id_facturas INT AUTO_INCREMENT PRIMARY KEY,
+    factura_codigo VARCHAR(45) NULL,
+    id_pedido INT,
+    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido)
+);

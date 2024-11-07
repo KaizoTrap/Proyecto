@@ -66,5 +66,5 @@ CREATE TABLE facturas_generadas (
 );
 
 
-INSERT INTO producto(nombre_producto,precio_producto,imagen) VALUES('CAMISETA NEGRA',40.000 ,'PROD000001.png');
-INSERT INTO producto(nombre_producto,precio_producto,imagen) VALUES('BUSO',110.000 ,'PROD000002.png');
+INSERT INTO producto(nombre_producto,precio_producto,imagen) VALUES('CAMISETA NEGRA',40.000 ,'PROD000002.png');
+INSERT INTO producto(nombre_producto,precio_producto,imagen) VALUES('BUSO',110.000 ,'PROD000001.png');
